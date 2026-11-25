@@ -57,7 +57,7 @@ export default function AppShell() {
             <main className="flex-1 schola-grid-container pb-24 pt-1 xl:min-h-0 xl:overflow-y-auto">
               <div className="relative flex min-h-[calc(100dvh-4rem)] flex-col bg-white">
                 <FloatingAddButton />
-                <div className="flex-1 pb-8">
+                <div className="flex-1 pb-3">
                   <CurrentPage />
                 </div>
               </div>
