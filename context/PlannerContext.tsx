@@ -12,7 +12,12 @@ import {
 } from 'react';
 import { useRouter } from 'next/navigation';
 import { HOUR_MS, NEW_CARD_ICONS, SEMESTERS, TODAY_ISO_DATE } from '@/lib/constants';
-import { demoCredentials, getCurrentDemoUser, logoutDemoAccount } from '@/lib/demo-auth';
+import {
+  changeDemoAccountEmail,
+  demoCredentials,
+  getCurrentDemoUser,
+  logoutDemoAccount,
+} from '@/lib/demo-auth';
 import { playClickSound, playSuccessSound } from '@/lib/sound';
 import {
   createInitialTasks,
@@ -25,6 +30,7 @@ import {
 import {
   readPlannerSnapshot,
   removeDemoSeedData,
+  movePlannerSnapshot,
   writePlannerSnapshot,
 } from '@/lib/planner-storage';
 import type {
@@ -208,9 +214,16 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
     try {
       const user = getCurrentDemoUser();
       if (user) {
+        const userProfile = {
+          name: user.name,
+          email: user.email,
+          studentClass: user.studentClass,
+          school: user.school,
+        };
         setPlannerAccountEmail(user.email);
-        setProfile((current) => ({ ...current, ...user }));
-        const isDummyAccountUser = user.email.toLowerCase() === demoCredentials.email.toLowerCase();
+        setProfile((current) => ({ ...current, ...userProfile }));
+        const isDummyAccountUser =
+          user.isDemo || user.email.toLowerCase() === demoCredentials.email.toLowerCase();
         setIsDummyAccount(isDummyAccountUser);
         const saved = readPlannerSnapshot(user.email);
         if (saved) {
@@ -231,7 +244,7 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
           setSelectedCalDay(accountSnapshot.selectedCalDay);
           setReminders(accountSnapshot.reminders);
         } else if (!isDummyAccountUser) {
-          setProfile({ ...initialProfile, ...user, nis: '', avatarDataUrl: undefined });
+          setProfile({ ...initialProfile, ...userProfile, nis: '', avatarDataUrl: undefined });
           setStudyCards([]);
           setFocusHours(0);
           setFocusTopicIndex(0);
@@ -295,6 +308,7 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
   // ---------- navigation ----------
   const setPage = useCallback(
     (p: PageKey) => {
+      playClickSound();
       const t = Date.now();
       setNow(t);
       setTasks((prev) => pruneTasks(prev, false, retention.value, retention.unit, t));
@@ -304,13 +318,18 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
     [retention],
   );
 
-  const toggleMobileNav = useCallback(() => setMobileNavOpen((o) => !o), []);
+  const toggleMobileNav = useCallback(() => {
+    playClickSound();
+    setMobileNavOpen((open) => !open);
+  }, []);
 
   // ---------- modals ----------
   const openModal = useCallback((id: ModalId) => {
+    playClickSound();
     setModal({ id, scheduleDay: 'Senin', agendaDay: TODAY_ISO_DATE, reminderToEdit: null, studyCardToEdit: null });
   }, []);
   const openReminderEditor = useCallback((reminder: Reminder) => {
+    playClickSound();
     setModal({
       id: 'addReminderModal',
       scheduleDay: 'Senin',
@@ -320,6 +339,7 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
     });
   }, []);
   const openStudyCardEditor = useCallback((card: StudyCard) => {
+    playClickSound();
     setModal({
       id: 'addStudyCardModal',
       scheduleDay: 'Senin',
@@ -365,10 +385,26 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
 
   const updateProfile = useCallback(
     (data: Pick<StudentProfile, 'name' | 'studentClass' | 'school' | 'email' | 'avatarDataUrl'>) => {
-      setProfile((p) => ({ ...p, ...data }));
+      let updatedData = data;
+      if (plannerAccountEmail && data.email.trim().toLowerCase() !== plannerAccountEmail) {
+        const nextEmail = changeDemoAccountEmail(plannerAccountEmail, data.email);
+        let migrationError: string | null = null;
+        try {
+          movePlannerSnapshot(plannerAccountEmail, nextEmail);
+        } catch (error) {
+          migrationError = error instanceof Error ? error.message : 'Data planner gagal dipindahkan.';
+        }
+        setPlannerAccountEmail(nextEmail);
+        updatedData = { ...data, email: nextEmail };
+        setProfile((profile) => ({ ...profile, ...updatedData }));
+        showToast(migrationError ?? `Profile diperbarui! Kelas: ${data.studentClass}`);
+        return;
+      }
+
+      setProfile((profile) => ({ ...profile, ...updatedData }));
       showToast(`Profile diperbarui! Kelas: ${data.studentClass}`);
     },
-    [showToast],
+    [plannerAccountEmail, showToast],
   );
 
   const toggleProfileSwitch = useCallback(

@@ -6,6 +6,7 @@ import {
   formatStudyDuration,
   hoursToDurationParts,
   isReminderOverdue,
+  sortTasksByDeadline,
 } from './utils';
 
 describe('formatReminderTime', () => {
@@ -20,6 +21,19 @@ describe('formatReminderTime', () => {
 
   it('preserves legacy display text when the value is not a date', () => {
     expect(formatReminderTime('Besok • 07:00 WIB')).toBe('Besok • 07:00 WIB');
+  });
+});
+
+describe('task deadline sorting', () => {
+  it('orders overdue and nearest pending tasks first, with completed tasks last', () => {
+    const tasks = [
+      { id: 1, completed: false, dueTimestamp: 300, title: '', subject: '', colorHex: '', customLabel: '', priority: 'Tinggi' as const, completedAt: null },
+      { id: 2, completed: false, dueTimestamp: 100, title: '', subject: '', colorHex: '', customLabel: '', priority: 'Tinggi' as const, completedAt: null },
+      { id: 3, completed: false, dueTimestamp: 200, title: '', subject: '', colorHex: '', customLabel: '', priority: 'Tinggi' as const, completedAt: null },
+      { id: 4, completed: true, dueTimestamp: 50, title: '', subject: '', colorHex: '', customLabel: '', priority: 'Tinggi' as const, completedAt: 400 },
+    ];
+
+    expect(sortTasksByDeadline(tasks).map((task) => task.id)).toEqual([2, 3, 1, 4]);
   });
 });
 

@@ -7,7 +7,6 @@ function getAudioContext(): AudioContext | null {
   if (!Context) return null;
 
   audioContext ??= new Context();
-  if (audioContext.state === "suspended") void audioContext.resume();
   return audioContext;
 }
 
@@ -15,6 +14,23 @@ function tone(frequency: number, start: number, duration: number, volume = 0.08)
   const context = getAudioContext();
   if (!context) return;
 
+  if (context.state !== "running") {
+    void context.resume()
+      .then(() => scheduleTone(context, frequency, start, duration, volume))
+      .catch(() => undefined);
+    return;
+  }
+
+  scheduleTone(context, frequency, start, duration, volume);
+}
+
+function scheduleTone(
+  context: AudioContext,
+  frequency: number,
+  start: number,
+  duration: number,
+  volume: number,
+) {
   const oscillator = context.createOscillator();
   const gain = context.createGain();
   oscillator.frequency.value = frequency;

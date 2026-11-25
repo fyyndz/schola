@@ -17,6 +17,13 @@ export function formatHours(hours: number): string {
   return hours.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
 }
 
+export function sortTasksByDeadline(tasks: Task[]): Task[] {
+  return [...tasks].sort((left, right) => {
+    if (left.completed !== right.completed) return Number(left.completed) - Number(right.completed);
+    return left.dueTimestamp - right.dueTimestamp;
+  });
+}
+
 export interface DurationParts {
   hours: string;
   minutes: string;

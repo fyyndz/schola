@@ -3,7 +3,7 @@
 import { Check, ChevronDown, History, Plus, Trash2 } from 'lucide-react';
 import { usePlanner } from '@/context/PlannerContext';
 import type { RetentionUnit, TaskFilter } from '@/lib/types';
-import { getDeadlineStatus, getDynamicStyles } from '@/lib/utils';
+import { getDeadlineStatus, getDynamicStyles, sortTasksByDeadline } from '@/lib/utils';
 
 export default function TasksPage() {
   const {
@@ -25,19 +25,19 @@ export default function TasksPage() {
   const pendingCount = tasks.filter((t) => !t.completed).length;
   const completedCount = tasks.length - pendingCount;
 
-  const filtered = tasks
-    .filter((t) => {
-      if (taskFilter === 'pending') return !t.completed;
-      if (taskFilter === 'completed') return t.completed;
+  const filtered = sortTasksByDeadline(tasks
+    .filter((task) => {
+      if (taskFilter === 'pending') return !task.completed;
+      if (taskFilter === 'completed') return task.completed;
       return true;
     })
     .filter(
-      (t) =>
+      (task) =>
         !query ||
-        t.title.toLowerCase().includes(query) ||
-        t.subject.toLowerCase().includes(query) ||
-        (t.customLabel && t.customLabel.toLowerCase().includes(query)),
-    );
+        task.title.toLowerCase().includes(query) ||
+        task.subject.toLowerCase().includes(query) ||
+        (task.customLabel && task.customLabel.toLowerCase().includes(query)),
+    ));
 
   const filters: { key: TaskFilter; label: string }[] = [
     { key: 'all', label: `Semua (${tasks.length})` },

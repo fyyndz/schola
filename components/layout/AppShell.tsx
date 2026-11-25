@@ -1,5 +1,6 @@
 'use client';
 
+import { Heart } from 'lucide-react';
 import { usePlanner } from '@/context/PlannerContext';
 import Toast from '@/components/ui/Toast';
 import Modals from '@/components/modals/Modals';
@@ -34,34 +35,43 @@ function CurrentPage() {
 }
 
 export default function AppShell() {
-  const { mobileNavOpen, toggleMobileNav } = usePlanner();
+  const { mobileNavOpen, toggleMobileNav, page } = usePlanner();
 
   return (
     <>
-      <div className="min-h-screen w-full flex flex-col xl:h-screen xl:w-screen xl:overflow-hidden xl:flex-row">
-        <MobileHeader />
+      <div className="flex min-h-screen w-full flex-col xl:h-screen xl:overflow-hidden">
+        <div className="min-h-screen w-full flex-1 flex flex-col xl:min-h-0 xl:overflow-hidden xl:flex-row">
+          <MobileHeader />
 
-        {/* Mobile sidebar backdrop */}
-        <div
-          onClick={toggleMobileNav}
-          className={`fixed inset-0 bg-[#052948]/40 backdrop-blur-xs z-40 ${mobileNavOpen ? 'xl:hidden' : 'hidden'}`}
-        />
+          {/* Mobile sidebar backdrop */}
+          <div
+            onClick={toggleMobileNav}
+            className={`fixed inset-0 bg-[#052948]/40 backdrop-blur-xs z-40 ${mobileNavOpen ? 'xl:hidden' : 'hidden'}`}
+          />
 
-        <Sidebar />
+          <Sidebar />
 
-        {/* Column 2: main canvas */}
-        <div className="flex-1 bg-[#F7FAFC] flex flex-col relative min-w-0 xl:overflow-hidden">
-          <Header />
-          <main className="flex-1 schola-grid-container pb-24 pt-1 xl:min-h-0 xl:overflow-y-auto">
-            <div className="relative bg-white">
-              <FloatingAddButton />
-              <CurrentPage />
-            </div>
-          </main>
+          {/* Column 2: main canvas */}
+          <div className="relative flex min-w-0 flex-1 flex-col bg-[#F7FAFC] xl:overflow-hidden">
+            <Header />
+            <main className="flex-1 schola-grid-container pb-24 pt-1 xl:min-h-0 xl:overflow-y-auto">
+              <div className="relative flex min-h-[calc(100dvh-4rem)] flex-col bg-white">
+                <FloatingAddButton />
+                <div className="flex-1 pb-8">
+                  <CurrentPage />
+                </div>
+              </div>
+            </main>
+          </div>
+
+          {/* Column 3: focus panel */}
+          {page !== 'profile' && <FocusPanel />}
         </div>
-
-        {/* Column 3: focus panel */}
-        <FocusPanel />
+        <footer className="flex shrink-0 items-center justify-center gap-1.5 border-t border-[#B3B9BF]/30 bg-white py-4 text-xs text-[#4D687D]">
+          <span>made by</span>
+          <Heart aria-hidden="true" className="h-3.5 w-3.5 fill-[#791A0A] text-[#791A0A]" />
+          <span>kelompok 1</span>
+        </footer>
       </div>
 
       <Modals />

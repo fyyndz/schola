@@ -11,12 +11,12 @@ type StoredAccount = {
   school: string;
   salt: string;
   passwordHash: string;
+  isDemo?: boolean;
 };
 
-export type DemoUser = Pick<
-  StoredAccount,
-  "name" | "email" | "studentClass" | "school"
->;
+export type DemoUser = Pick<StoredAccount, "name" | "email" | "studentClass" | "school"> & {
+  isDemo: boolean;
+};
 
 function isStoredAccount(value: unknown): value is StoredAccount {
   if (typeof value !== "object" || value === null) return false;
@@ -32,7 +32,8 @@ function isStoredAccount(value: unknown): value is StoredAccount {
     "salt" in value &&
     typeof value.salt === "string" &&
     "passwordHash" in value &&
-    typeof value.passwordHash === "string"
+    typeof value.passwordHash === "string" &&
+    (!("isDemo" in value) || typeof value.isDemo === "boolean")
   );
 }
 
@@ -118,14 +119,14 @@ function equalHash(left: string, right: string): boolean {
 }
 
 function toDemoUser(account: StoredAccount): DemoUser {
+  const isDemo = account.isDemo === true || account.email === normalizeEmail(demoCredentials.email);
   return {
     name:
-      account.email === normalizeEmail(demoCredentials.email)
-        ? demoCredentials.name
-        : account.name,
+      isDemo ? demoCredentials.name : account.name,
     email: account.email,
     studentClass: account.studentClass,
     school: account.school,
+    isDemo,
   };
 }
 
@@ -142,9 +143,12 @@ async function ensureDemoAccount(): Promise<StoredAccount[]> {
     saveAccounts(accounts);
   }
   const demoEmail = normalizeEmail(demoCredentials.email);
-  const existingDemoAccount = accounts.find((account) => account.email === demoEmail);
+  const existingDemoAccount = accounts.find(
+    (account) => account.isDemo || account.email === demoEmail,
+  );
   if (existingDemoAccount) {
-    if (existingDemoAccount.name !== demoCredentials.name) {
+    if (!existingDemoAccount.isDemo || existingDemoAccount.name !== demoCredentials.name) {
+      existingDemoAccount.isDemo = true;
       existingDemoAccount.name = demoCredentials.name;
       saveAccounts(accounts);
     }
@@ -159,6 +163,7 @@ async function ensureDemoAccount(): Promise<StoredAccount[]> {
     school: demoCredentials.school,
     salt: toBase64(salt),
     passwordHash: await hashPassword(demoCredentials.password, salt),
+    isDemo: true,
   });
   saveAccounts(accounts);
   return accounts;
@@ -230,6 +235,46 @@ export async function registerDemoAccount(input: {
   saveAccounts(accounts);
   saveSession(account.email, true);
   return toDemoUser(account);
+}
+
+export function getDemoAccountEmail(): string {
+  const demoAccount = getAccounts().find(
+    (account) => account.isDemo || account.email === normalizeEmail(demoCredentials.email),
+  );
+  return demoAccount?.email ?? normalizeEmail(demoCredentials.email);
+}
+
+export function changeDemoAccountEmail(currentEmail: string, nextEmail: string): string {
+  const current = normalizeEmail(currentEmail);
+  const next = normalizeEmail(nextEmail);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(next)) {
+    throw new Error("Masukkan alamat email yang valid.");
+  }
+  if (current === next) return next;
+
+  const accounts = getAccounts();
+  const accountIndex = accounts.findIndex((account) => account.email === current);
+  if (accountIndex < 0) {
+    throw new Error("Akun tidak ditemukan. Silakan masuk kembali.");
+  }
+  if (accounts.some((account) => account.email === next)) {
+    throw new Error("Email ini sudah digunakan akun lain.");
+  }
+
+  accounts[accountIndex].email = next;
+  saveAccounts(accounts);
+
+  try {
+    if (window.localStorage.getItem(REMEMBERED_SESSION_KEY) === current) {
+      window.localStorage.setItem(REMEMBERED_SESSION_KEY, next);
+    }
+    if (window.sessionStorage.getItem(SESSION_KEY) === current) {
+      window.sessionStorage.setItem(SESSION_KEY, next);
+    }
+  } catch {
+    throw new Error("Email akun berubah, tetapi sesi tidak dapat diperbarui. Silakan masuk kembali.");
+  }
+  return next;
 }
 
 export function getCurrentDemoUser(): DemoUser | null {

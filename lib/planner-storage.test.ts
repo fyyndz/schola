@@ -10,6 +10,7 @@ import {
 import {
   readPlannerSnapshot,
   removeDemoSeedData,
+  movePlannerSnapshot,
   writePlannerSnapshot,
   type PlannerSnapshot,
 } from './planner-storage';
@@ -68,6 +69,15 @@ describe('planner data persistence', () => {
     writePlannerSnapshot('first@example.com', snapshot);
 
     expect(readPlannerSnapshot('second@example.com')).toBeNull();
+  });
+
+  it('moves saved planner data to an updated account email', () => {
+    writePlannerSnapshot('old@example.com', snapshot);
+
+    movePlannerSnapshot('old@example.com', 'new@example.com');
+
+    expect(readPlannerSnapshot('old@example.com')).toBeNull();
+    expect(readPlannerSnapshot('new@example.com')).toEqual(snapshot);
   });
 
   it('rejects malformed saved planner data', () => {

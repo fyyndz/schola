@@ -1,8 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { Bell, Menu, Search, UserRound } from 'lucide-react';
+import { Bell, Menu, UserRound } from 'lucide-react';
 import { usePlanner } from '@/context/PlannerContext';
+import GlobalSearch from './GlobalSearch';
 
 export default function MobileHeader() {
   const {
@@ -11,8 +12,6 @@ export default function MobileHeader() {
     activeRemindersCount,
     firstName,
     profile,
-    search,
-    setSearch,
   } = usePlanner();
   return (
     <div className="z-30 flex shrink-0 items-center gap-2 bg-white px-3 py-3 border-b border-[#B3B9BF]/40 xl:hidden">
@@ -25,18 +24,7 @@ export default function MobileHeader() {
           <Menu className="w-5 h-5" />
         </button>
       </div>
-      <div className="relative min-w-0 flex-1">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#4D687D]" />
-        <input
-          type="text"
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Cari..."
-          aria-label="Cari tugas, jadwal, atau pelajaran"
-          autoComplete="off"
-          className="h-10 w-full rounded-xl border border-[#B3B9BF]/50 bg-[#F7FAFC] pl-9 pr-3 text-sm text-[#052948] placeholder:text-[#4D687D]/65 outline-none focus:border-[#052948]"
-        />
-      </div>
+      <GlobalSearch compact />
       <div className="flex shrink-0 items-center gap-2">
         <button
           onClick={() => setPage('reminders')}

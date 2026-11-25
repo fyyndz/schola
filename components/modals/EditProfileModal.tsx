@@ -17,6 +17,7 @@ export default function EditProfileModal() {
   const [avatarDataUrl, setAvatarDataUrl] = useState(profile.avatarDataUrl ?? '');
   const [avatarFileName, setAvatarFileName] = useState('');
   const [avatarError, setAvatarError] = useState('');
+  const [profileError, setProfileError] = useState('');
   const avatarInputRef = useRef<HTMLInputElement>(null);
 
   const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -72,19 +73,29 @@ export default function EditProfileModal() {
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    updateProfile({
-      name: name.trim(),
-      studentClass: studentClass.trim(),
-      school: school.trim(),
-      email: email.trim(),
-      avatarDataUrl: avatarDataUrl || undefined,
-    });
-    closeModal();
+    setProfileError('');
+    try {
+      updateProfile({
+        name: name.trim(),
+        studentClass: studentClass.trim(),
+        school: school.trim(),
+        email: email.trim(),
+        avatarDataUrl: avatarDataUrl || undefined,
+      });
+      closeModal();
+    } catch (error) {
+      setProfileError(error instanceof Error ? error.message : 'Profil tidak dapat diperbarui.');
+    }
   };
 
   return (
     <Modal title="Edit Profile Siswa" onClose={closeModal}>
       <form onSubmit={submit} className="space-y-4">
+        {profileError && (
+          <p role="alert" className="rounded-xl border border-[#791A0A]/20 bg-[#791A0A]/5 px-3 py-2 text-xs font-semibold text-[#791A0A]">
+            {profileError}
+          </p>
+        )}
         <Field label="Nama Lengkap">
           <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className={inputCls} />
         </Field>

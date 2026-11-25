@@ -272,3 +272,14 @@ export function writePlannerSnapshot(email: string, snapshot: PlannerSnapshot): 
     throw new Error('Data belum tersimpan. Penyimpanan browser penuh atau tidak tersedia.');
   }
 }
+
+export function movePlannerSnapshot(fromEmail: string, toEmail: string): void {
+  const snapshot = readPlannerSnapshot(fromEmail);
+  if (snapshot) writePlannerSnapshot(toEmail, snapshot);
+
+  try {
+    window.localStorage.removeItem(storageKey(fromEmail));
+  } catch {
+    throw new Error('Data planner sudah dipindahkan, tetapi salinan lama tidak dapat dihapus.');
+  }
+}

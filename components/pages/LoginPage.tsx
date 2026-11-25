@@ -7,11 +7,17 @@ import AuthShell from "../_components/AuthShell";
 import PasswordInput from "../_components/PasswordInput";
 import GoogleButton from "../_components/GoogleButton";
 import styles from "../_components/auth.module.css";
-import { demoCredentials, getCurrentDemoUser, loginDemoAccount } from "@/lib/demo-auth";
+import {
+  demoCredentials,
+  getCurrentDemoUser,
+  getDemoAccountEmail,
+  loginDemoAccount,
+} from "@/lib/demo-auth";
 
 export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [demoEmail, setDemoEmail] = useState(demoCredentials.email);
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -19,9 +25,10 @@ export default function LoginPage() {
 
   useEffect(() => {
     try {
+      setDemoEmail(getDemoAccountEmail());
       if (getCurrentDemoUser()) router.replace("/");
-    } catch {
-      // Biarkan halaman login ditampilkan jika sesi tidak dapat dibaca.
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sesi tidak dapat dibaca.");
     }
   }, [router]);
 
@@ -41,7 +48,7 @@ export default function LoginPage() {
   }
 
   function useDemoAccount() {
-    setEmail(demoCredentials.email);
+    setEmail(demoEmail);
     setPassword(demoCredentials.password);
     setError(null);
   }
@@ -108,7 +115,7 @@ export default function LoginPage() {
       <div className={styles.demoHint}>
         <div>
           <strong>Akun demo</strong>
-          <span>{demoCredentials.email}</span>
+          <span>{demoEmail}</span>
           <span>Kata sandi: {demoCredentials.password}</span>
         </div>
         <button type="button" onClick={useDemoAccount}>
