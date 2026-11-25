@@ -2,6 +2,7 @@ const ACCOUNTS_KEY = "schola.demo.accounts";
 const REMEMBERED_SESSION_KEY = "schola.demo.remembered-session";
 const SESSION_KEY = "schola.demo.session";
 const PBKDF2_ITERATIONS = 120_000;
+const LEGACY_DEMO_EMAIL = "leviona@schola.id";
 
 type StoredAccount = {
   name: string;
@@ -37,8 +38,8 @@ function isStoredAccount(value: unknown): value is StoredAccount {
 
 export const demoCredentials = {
   name: "Leviona",
-  email: "leviona@schola.id",
-  password: "Leviona123!",
+  email: "schola@gmail.com",
+  password: "schola_123",
   studentClass: "XI IPA 2",
   school: "SMA Schola",
 };
@@ -133,7 +134,13 @@ function normalizeEmail(email: string): string {
 }
 
 async function ensureDemoAccount(): Promise<StoredAccount[]> {
-  const accounts = getAccounts();
+  const storedAccounts = getAccounts();
+  const accounts = storedAccounts.filter(
+    (account) => account.email !== LEGACY_DEMO_EMAIL,
+  );
+  if (accounts.length !== storedAccounts.length) {
+    saveAccounts(accounts);
+  }
   const demoEmail = normalizeEmail(demoCredentials.email);
   const existingDemoAccount = accounts.find((account) => account.email === demoEmail);
   if (existingDemoAccount) {
@@ -235,6 +242,10 @@ export function getCurrentDemoUser(): DemoUser | null {
     throw new Error("Sesi tidak dapat dibaca dari penyimpanan browser.");
   }
   if (!email) return null;
+  if (email === LEGACY_DEMO_EMAIL) {
+    logoutDemoAccount();
+    return null;
+  }
 
   const account = getAccounts().find((item) => item.email === email);
   return account ? toDemoUser(account) : null;

@@ -12,7 +12,7 @@ export const initialProfile: StudentProfile = {
   name: 'Leviona',
   studentClass: 'XI IPA 2',
   school: 'SMA Negeri 1 Harapan Bangsa',
-  email: 'leviona@schola.id',
+  email: 'schola@gmail.com',
   nis: '202611089',
   notifDeadline: true,
   notifSchedule: true,

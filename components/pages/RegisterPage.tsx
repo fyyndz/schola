@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AuthShell from "../_components/AuthShell";
 import PasswordInput from "../_components/PasswordInput";
 import GoogleButton from "../_components/GoogleButton";
 import styles from "../_components/auth.module.css";
-import { registerDemoAccount } from "@/lib/demo-auth";
+import { getCurrentDemoUser, registerDemoAccount } from "@/lib/demo-auth";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -20,6 +20,14 @@ export default function RegisterPage() {
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (getCurrentDemoUser()) router.replace("/");
+    } catch {
+      // Biarkan halaman daftar ditampilkan jika sesi tidak dapat dibaca.
+    }
+  }, [router]);
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));

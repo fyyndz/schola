@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AuthShell from "../_components/AuthShell";
 import PasswordInput from "../_components/PasswordInput";
 import GoogleButton from "../_components/GoogleButton";
 import styles from "../_components/auth.module.css";
-import { demoCredentials, loginDemoAccount } from "@/lib/demo-auth";
+import { demoCredentials, getCurrentDemoUser, loginDemoAccount } from "@/lib/demo-auth";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,6 +16,14 @@ export default function LoginPage() {
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (getCurrentDemoUser()) router.replace("/");
+    } catch {
+      // Biarkan halaman login ditampilkan jika sesi tidak dapat dibaca.
+    }
+  }, [router]);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
