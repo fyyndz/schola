@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  line-height: normal;
+  background-color: #f7fafc;
+  color: #052948;
+  overflow-x: hidden;
+  font-family: var(--font-poppins), system-ui, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b3b9bf;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4d687d;
+}
+
+@layer components {
+  .nav-tooltip {
+    opacity: 0;
+    transform: translateX(-6px);
+    pointer-events: none;
+    transition: all 0.18s ease;
+  }
+
+  .sidebar-btn:hover .nav-tooltip {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* 12-column grid: gutter 20px, margin 100px on desktop */
+  .schola-grid-container {
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  @media (min-width: 640px) {
+    .schola-grid-container {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .schola-grid-container {
+      padding-left: 14px;
+      padding-right: 10px;
+    }
+  }
+
+  .schola-12-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 20px;
+  }
+}

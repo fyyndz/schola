@@ -1,0 +1,140 @@
+{
+  "planHash": "e15658fdb164f7bc026e658bfaa8c058498c54877addbd9a3f6ddbd89af35555",
+  "phase": "standalone",
+  "recordedAtUtc": "2026-11-25T21:23:48.0455138Z",
+  "retryCount": 0,
+  "resetBaseline": false,
+  "complete": true,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 0,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "tsc-no-emit",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "",
+        "durationMs": 7948
+      },
+      {
+        "name": "tests-pass",
+        "kind": "process",
+        "verificationMethod": "test-results",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E schola-student-planner@0.1.0 test\r\n\u003E vitest run --maxWorkers=1 --minWorkers=1\r\n\r\n\r\n\u001B[1m\u001B[46m RUN \u001B[49m\u001B[22m \u001B[36mv3.2.7 \u001B[39m\u001B[90mC:/Users/moklet/Downloads/schola-next/schola-next\u001B[39m\r\n\r\n \u001B[32m\u2713\u001B[39m lib/utils.test.ts \u001B[2m(\u001B[22m\u001B[2m8 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 84\u001B[2mms\u001B[22m\u001B[39m\r\n \u001B[32m\u2713\u001B[39m lib/planner-storage.test.ts \u001B[2m(\u001B[22m\u001B[2m4 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 16\u001B[2mms\u001B[22m\u001B[39m\r\n\r\n\u001B[2m Test Files \u001B[22m \u001B[1m\u001B[32m2 passed\u001B[39m\u001B[22m\u001B[90m (2)\u001B[39m\r\n\u001B[2m      Tests \u001B[22m \u001B[1m\u001B[32m12 passed\u001B[39m\u001B[22m\u001B[90m (12)\u001B[39m\r\n\u001B[2m   Start at \u001B[22m 04:23:42\r\n\u001B[2m   Duration \u001B[22m 2.41s\u001B[2m (transform 243ms, setup 0ms, collect 328ms, tests 100ms, environment 1ms, prepare 471ms)\u001B[22m\r\n\r\n",
+        "durationMs": 4297,
+        "testResults": {
+          "testFramework": "vitest",
+          "runnerDetectedFrom": "package_json",
+          "testsTotal": 12,
+          "testsPassed": 12,
+          "testsFailed": 0,
+          "testsSkipped": 0,
+          "parseFailed": false
+        }
+      },
+      {
+        "name": "dev-server-serves-home",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": false,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 404\n\u003C!DOCTYPE html\u003E\u003Chtml lang=\u0022id\u0022 class=\u0022__variable_927d28\u0022\u003E\u003Chead\u003E\u003Cmeta charSet=\u0022utf-8\u0022/\u003E\u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1\u0022/\u003E\u003Clink rel=\u0022stylesheet\u0022 href=\u0022/_next/static/css/app/layout.css?v=1795641827752\u0022 data-precedence=\u0022next_static/css/app/layout.css\u0022/\u003E\u003Clink rel=\u0022preload\u0022 as=\u0022script\u0022 fetchPriority=\u0022low\u0022 href=\u0022/_next/static/chunks/webpack.js?v=1795641827752\u0022/\u003E\u003Cscript src=\u0022/_next/static/chunks/main-app.js?v=1795641827752\u0022 async=\u0022\u0022\u003E\u003C/script\u003E\u003Cscript src=\u0022/_next/static/chunks/app-pages-internals.js\u0022 async=\u0022\u0022\u003E\u003C/script\u003E\u003Cmeta name=\u0022robots\u0022 content=\u0022noindex\u0022/\u003E\u003Ctitle\u003E404: This page could not be found.\u003C/title\u003E\u003Ctitle\u003ESchola \u2014 Student Planner\u003C/title\u003E\u003Cmeta name=\u0022description\u0022 content=\u0022Atur jadwal pelajaran, tugas, dan fokus belajarmu dalam satu tempat.\u0022/\u003E\u003Cscript src=\u0022/_next/static/chunks/polyfills.js\u0022 noModule=\u0022\u0022\u003E\u003C/script\u003E\u003C/head\u003E\u003Cbody class=\u0022antialiased m-0 p-0 selection:bg-[#052948] selection:text-white\u0022\u003E\u003Cdiv style=\u0022font-family:system-ui,\u0026quot;Segoe UI\u0026quot;,Roboto,Helvetica,Arial,sans-serif,\u0026quot;Apple Color Emoji\u0026quot;,\u0026quot;Segoe UI Emoji\u0026quot;;height:100vh;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center\u0022\u003E\u003Cdiv\u003E\u003Cstyle\u003Ebody{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\u003C/style\u003E\u003Ch1 class=\u0022next-error-h1\u0022 style=\u0022display:inline-block;margin:0 20px 0 0;padding:0 23px 0 0;font-size:24px;font-weight:500;vertical-align:top;line-height:49px\u0022\u003E404\u003C/h1\u003E\u003Cdiv style=\u0022display:inline-block\u0022\u003E\u003Ch2 style=\u0022font-size:14px;font-weight:400;line-height:49px;margin:0\u0022\u003EThis page could not be found.\u003C/h2\u003E\u003C/div\u003E\u003C/div\u003E\u003C/div\u003E\u003Cscript src=\u0022/_next/static/chunks/webpack.js?v=1795641827752\u0022 async=\u0022\u0022\u003E\u003C/script\u003E\u003Cscript\u003E(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])\u003C/script\u003E\u003Cscript\u003Eself.__next_f.push([1,\u00221:HL[\\\u0022/_next/static/css/app/layout.css?v=1795641827752\\\u0022,\\\u0022style\\\u0022]\\n0:D{\\\u0022name\\\u0022:\\\u0022r2\\\u0022,\\\u0022env\\\u0022:\\\u0022Server\\\u0022}\\n\u0022])\u003C/script\u003E\u003Cscript\u003Eself.__next_f.push([1,\u00222:I[\\\u0022(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js\\\u0022,[\\\u0022app-pages-internals\\\u0022,\\\u0022static/chunks/app-pages-internals.js\\\u0022],\\\u0022\\\u0022]\\n5:I[\\\u0022(app-pages-browser)/./node_modules/next/dist/client/components/layout-router.js\\\u0022,[\\\u0022app-pages-internals\\\u0022,\\\u0022static/chunks/app-pages-internals.js\\\u0022],\\\u0022\\\u0022]\\n6:I[\\\u0022(app-pages-browser)/./node_modules/next/dist/client/components/render-from-template-context.js\\\u0022,[\\\u0022app-pages-internals\\\u0022,\\\u0022static/chunks/app-pages-internals.js\\\u0022],\\\u0022\\\u0022]\\nf:I[\\\u0022(app-pages-browser)/./node_modules/next/dist/client/components/error-boundary.js\\\u0022,[\\\u0022app-pages-internals\\\u0022,\\\u0022static/chunks/app-pages-internals.js\\\u0022],\\\u0022\\\u0022]\\n3:D{\\\u0022name\\\u0022:\\\u0022\\\u0022,\\\u0022env\\\u0022:\\\u0022Server\\\u0022}\\n4:D{\\\u0022name\\\u0022:\\\u0022NotFound\\\u0022,\\\u0022env\\\u0022:\\\u0022Server\\\u0022}\\n4:[[\\\u0022$\\\u0022,\\\u0022title\\\u0022,null,{\\\u0022children\\\u0022:\\\u0022404: This page could not be found.\\\u0022}],[\\\u0022$\\\u0022,\\\u0022div\\\u0022,null,{\\\u0022style\\\u0022:{\\\u0022fontFamily\\\u0022:\\\u0022system-ui,\\\\\\\u0022Segoe UI\\\\\\\u0022,Roboto,Helvetica,Arial,sans-serif,\\\\\\\u0022Apple Color Emoji\\\\\\\u0022,\\\\\\\u0022Segoe UI Emoji\\\\\\\u0022\\\u0022,\\\u0022height\\\u0022:\\\u0022100vh\\\u0022,\\\u0022textAlign\\\u0022:\\\u0022center\\\u0022,\\\u0022display\\\u0022:\\\u0022flex\\\u0022,\\\u0022flexDirection\\\u0022:\\\u0022column\\\u0022,\\\u0022alignItems\\\u0022:\\\u0022center\\\u0022,\\\u0022justifyContent\\\u0022:\\\u0022center\\\u0022},\\\u0022children\\\u0022:[\\\u0022$\\\u0022,\\\u0022div\\\u0022,null,{\\\u0022children\\\u0022:[[\\\u0022$\\\u0022,\\\u0022style\\\u0022,null,{\\\u0022dangerouslySetInnerHTML\\\u0022:{\\\u0022__html\\\u0022:\\\u0022body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\\\u0022}}],[\\\u0022$\\\u0022,\\\u0022h1\\\u0022,null,{\\\u0022className\\\u0022:\\\u0022next-error-h1\\\u0022,\\\u0022style\\\u0022:{\\\u0022display\\\u0022:\\\u0022inline-block\\\u0022,\\\u0022margin\\\u0022:\\\u00220 20px 0 0\\\u0022,\\\u0022padding\\\u0022:\\\u00220 23px 0 0\\\u0022,\\\u0022fontSize\\\u0022:24,\\\u0022fontWeight\\\u0022:500,\\\u0022verticalAlign\\\u0022:\\\u0022top\\\u0022,\\\u0022lineHeight\\\u0022:\\\u002249px\\\u0022},\\\u0022children\\\u0022:\\\u0022404\\\u0022}],[\\\u0022$\\\u0022,\\\u0022div\\\u0022,null,{\\\u0022style\\\u0022:{\\\u0022display\\\u0022:\\\u0022inline-block\\\u0022},\\\u0022children\\\u0022:[\\\u0022$\\\u0022,\\\u0022h2\\\u0022,null,{\\\u0022style\\\u0022:{\\\u0022fontSize\\\u0022:14,\\\u0022fontWeight\\\u0022:400,\\\u0022lineHeight\\\u0022:\\\u002249px\\\u0022,\\\u0022margin\\\u0022:0},\\\u0022children\\\u0022:\\\u0022This page could not be found.\\\u0022}]}]]}]}]]\\n7:D{\\\u0022na\n\u2026[truncated]",
+        "durationMs": 2663
+      }
+    ],
+    "executions": [
+      {
+        "source": "tsc-no-emit",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npx.CMD",
+        "args": [
+          "tsc",
+          "--noEmit"
+        ],
+        "cwd": "C:\\Users\\moklet\\Downloads\\schola-next\\schola-next",
+        "env": {
+          "NODE_OPTIONS": "--max-old-space-size=512"
+        },
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": null,
+        "nodeVersion": null,
+        "packageManager": null,
+        "packageManagerExecutable": null,
+        "packageManagerVersion": null,
+        "cleanup": {
+          "RootProcessId": 28124,
+          "Completed": true,
+          "ProcessesObserved": 6,
+          "ProcessesTerminated": 0,
+          "Failure": null
+        }
+      },
+      {
+        "source": "tests-pass",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "args": [
+          "test",
+          "--",
+          "--maxWorkers=1",
+          "--minWorkers=1"
+        ],
+        "cwd": "C:\\Users\\moklet\\Downloads\\schola-next\\schola-next",
+        "env": {
+          "NODE_OPTIONS": "--max-old-space-size=512"
+        },
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v20.20.2",
+        "packageManager": "npm",
+        "packageManagerExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "packageManagerVersion": "10.8.2",
+        "cleanup": {
+          "RootProcessId": 36956,
+          "Completed": true,
+          "ProcessesObserved": 15,
+          "ProcessesTerminated": 1,
+          "Failure": null
+        }
+      },
+      {
+        "source": "dev-server-serves-home",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "args": [
+          "run",
+          "dev"
+        ],
+        "cwd": "C:\\Users\\moklet\\Downloads\\schola-next\\schola-next",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v20.20.2",
+        "packageManager": "npm",
+        "packageManagerExecutable": "C:\\Program Files\\nodejs\\npm.cmd",
+        "packageManagerVersion": "10.8.2",
+        "cleanup": {
+          "RootProcessId": 39076,
+          "Completed": true,
+          "ProcessesObserved": 8,
+          "ProcessesTerminated": 6,
+          "Failure": null
+        }
+      }
+    ]
+  }
+}
