@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import { Bell, Search } from 'lucide-react';
+import { Bell, Search, UserRound } from 'lucide-react';
 import { usePlanner } from '@/context/PlannerContext';
 import type { PageKey } from '@/lib/types';
 
@@ -94,7 +94,7 @@ export default function Header() {
   };
 
   return (
-    <header className="h-16 schola-grid-container flex items-center justify-between gap-[20px] shrink-0">
+    <header className="hidden h-16 shrink-0 items-center justify-between gap-[20px] schola-grid-container xl:flex">
       <div className="relative flex-1 min-w-0">
         <Search className="w-4 h-4 text-[#4D687D] absolute left-3.5 top-1/2 -translate-y-1/2" />
         <input
@@ -166,9 +166,9 @@ export default function Header() {
 
         <button
           onClick={() => setPage('profile')}
-          className="flex items-center gap-2.5 p-1 pr-3 rounded-2xl bg-white hover:bg-[#B3B9BF]/15 border border-[#B3B9BF]/45 shadow-2xs transition-all"
+          className="flex h-10 items-center justify-center gap-2.5 rounded-2xl border border-[#B3B9BF]/45 bg-white p-1 pr-1 shadow-2xs transition-all hover:bg-[#B3B9BF]/15 xl:pr-3"
         >
-          <div className="w-8 h-8 rounded-full bg-[#052948] text-white font-extrabold text-xs flex items-center justify-center shadow-2xs overflow-hidden">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#052948] text-xs font-extrabold text-white shadow-2xs">
             {profile.avatarDataUrl ? (
               <Image
                 src={profile.avatarDataUrl}
@@ -178,8 +178,10 @@ export default function Header() {
                 unoptimized
                 className="h-full w-full object-cover"
               />
-            ) : (
+            ) : firstName ? (
               <span>{firstName.charAt(0).toUpperCase()}</span>
+            ) : (
+              <UserRound className="h-4 w-4" />
             )}
           </div>
           <div className="hidden sm:block text-left">

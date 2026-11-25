@@ -55,10 +55,6 @@
   height: auto;
 }
 
-.mobileIllustration {
-  display: none;
-}
-
 .header {
   margin-bottom: 20px;
   text-align: center;
@@ -381,18 +377,6 @@
     margin-bottom: 12px;
   }
 
-  .mobileIllustration {
-    display: flex;
-    justify-content: center;
-    margin: 0 auto 16px;
-  }
-
-  .mobileIllustration img {
-    width: auto;
-    max-width: 100%;
-    height: clamp(150px, 22vh, 190px);
-    object-fit: contain;
-  }
 }
 
 @media (max-width: 420px) {

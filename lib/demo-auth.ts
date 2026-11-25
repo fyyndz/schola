@@ -37,7 +37,7 @@ function isStoredAccount(value: unknown): value is StoredAccount {
 }
 
 export const demoCredentials = {
-  name: "Leviona",
+  name: "Schola",
   email: "schola@gmail.com",
   password: "schola_123",
   studentClass: "XI IPA 2",

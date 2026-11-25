@@ -9,7 +9,7 @@ import type {
 } from './types';
 
 export const initialProfile: StudentProfile = {
-  name: 'Leviona',
+  name: 'Schola',
   studentClass: 'XI IPA 2',
   school: 'SMA Negeri 1 Harapan Bangsa',
   email: 'schola@gmail.com',

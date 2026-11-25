@@ -13,6 +13,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { HOUR_MS, NEW_CARD_ICONS, SEMESTERS, TODAY_ISO_DATE } from '@/lib/constants';
 import { demoCredentials, getCurrentDemoUser, logoutDemoAccount } from '@/lib/demo-auth';
+import { playClickSound, playSuccessSound } from '@/lib/sound';
 import {
   createInitialTasks,
   initialCalendarEvents,
@@ -215,7 +216,7 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
         if (saved) {
           const accountSnapshot = isDummyAccountUser ? saved : removeDemoSeedData(saved);
           const savedProfile =
-            isDummyAccountUser && accountSnapshot.profile.name === 'Leviona Putri'
+            isDummyAccountUser && (accountSnapshot.profile.name === 'Leviona Putri' || accountSnapshot.profile.name === 'Leviona')
               ? { ...accountSnapshot.profile, name: demoCredentials.name }
               : accountSnapshot.profile;
           setProfile(savedProfile);
@@ -418,6 +419,7 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
         prev.map((c) => (c.id === id ? { ...c, doneHours: Math.min(c.goalHours, +(c.doneHours + 1).toFixed(2)) } : c)),
       );
       addFocusHours(1);
+      playSuccessSound();
       showToast(`+1 Jam ditambahkan ke ${card.title}!`);
     },
     [studyCards, addFocusHours, showToast],
@@ -538,6 +540,8 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
       setTasks((prev) =>
         prev.map((t) => (t.id === id ? { ...t, completed, completedAt: completed ? Date.now() : null } : t)),
       );
+      if (completed) playSuccessSound();
+      else playClickSound();
       showToast(completed ? 'Tugas selesai! Masuk riwayat sementara.' : 'Tugas dibuka kembali.');
     },
     [tasks, showToast],

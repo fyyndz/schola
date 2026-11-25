@@ -4,6 +4,13 @@ import { CornerDownRight, RefreshCw, RotateCcw, Sparkles } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { usePlanner } from '@/context/PlannerContext';
 import { formatHours, getDynamicStyles, hoursToDurationParts } from '@/lib/utils';
+import {
+  playAlarmSound,
+  playClickSound,
+  playSuccessSound,
+  requestStudyNotificationPermission,
+  showStudyNotification,
+} from '@/lib/sound';
 
 const DEFAULT_TIMER_MINUTES = 25;
 const DEFAULT_TIMER_SECONDS = DEFAULT_TIMER_MINUTES * 60;
@@ -92,11 +99,20 @@ export default function FocusPanel() {
   useEffect(() => {
     if (phase === 'focus' && seconds === 0) {
       setPhase('done');
+      playAlarmSound();
+      showStudyNotification(
+        'Waktu belajar selesai',
+        activeCard
+          ? `Sesi ${activeCard.title} selesai dan waktu belajar sudah dicatat.`
+          : 'Sesi belajar selesai dan waktu belajar sudah dicatat.',
+      );
       if (activeCard) {
         logStudySession(activeCard.id, timerDurationSeconds / 3600);
+        playSuccessSound();
       } else {
         addFocusHours(timerDurationSeconds / 3600);
         showToast(`Sesi timer selesai! ${formatHours(timerDurationSeconds / 3600)} jam belajar dicatat.`);
+        playSuccessSound();
       }
     }
   }, [phase, seconds, activeCard, timerDurationSeconds, logStudySession, addFocusHours, showToast]);
@@ -104,17 +120,21 @@ export default function FocusPanel() {
   const toggle = () => {
     if (phase === 'focus') {
       setPhase('paused');
+      playClickSound();
     } else {
       if (timerDurationSeconds <= 0) {
         showToast('Atur durasi timer lebih dari 0 sebelum memulai.');
         return;
       }
+      void requestStudyNotificationPermission();
+      playClickSound();
       if (seconds === 0) setSeconds(timerDurationSeconds);
       setPhase('focus');
     }
   };
 
   const reset = () => {
+    playClickSound();
     setPhase('idle');
     setSeconds(timerDurationSeconds);
   };
@@ -199,7 +219,7 @@ export default function FocusPanel() {
                   disabled={phase === 'focus'}
                   aria-label={`${accessibleUnit} timer`}
                   title={`Durasi timer: ${unit === 'hours' ? `0–${MAX_TIMER_HOURS} jam` : '0–59'}`}
-                  className="w-8 rounded-lg bg-white/15 px-0.5 py-0.5 text-center text-[11px] font-bold text-white focus:outline-none focus:ring-1 focus:ring-white/70 disabled:opacity-70"
+                  className="h-10 w-10 rounded-lg bg-white/15 px-0.5 py-0.5 text-center text-[11px] font-bold text-white focus:outline-none focus:ring-1 focus:ring-white/70 disabled:opacity-70 sm:h-auto sm:w-8"
                 />
                 <span>{shortLabel}</span>
               </label>
@@ -217,7 +237,7 @@ export default function FocusPanel() {
           <div className="flex items-center gap-1.5">
             <button
               onClick={toggle}
-              className="px-3.5 py-2 rounded-full bg-[#791A0A] hover:bg-[#96220E] text-white text-xs font-extrabold shadow-sm transition-all"
+              className="min-h-11 rounded-full bg-[#791A0A] px-4 py-2.5 text-xs font-extrabold text-white shadow-sm transition-all hover:bg-[#96220E] sm:min-h-0 sm:px-3.5 sm:py-2"
             >
               {PHASE_BUTTON[phase]}
             </button>
@@ -225,7 +245,7 @@ export default function FocusPanel() {
               onClick={reset}
               title="Reset"
               aria-label="Reset timer"
-              className="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition-colors"
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-white/15 transition-colors hover:bg-white/25 sm:h-8 sm:w-8"
             >
               <RotateCcw className="w-3.5 h-3.5" />
             </button>

@@ -53,9 +53,11 @@ export default function AppShell() {
         <div className="flex-1 bg-[#F7FAFC] flex flex-col relative min-w-0 xl:overflow-hidden">
           <Header />
           <main className="flex-1 schola-grid-container pb-24 pt-1 xl:min-h-0 xl:overflow-y-auto">
-            <CurrentPage />
+            <div className="relative bg-white">
+              <FloatingAddButton />
+              <CurrentPage />
+            </div>
           </main>
-          <FloatingAddButton />
         </div>
 
         {/* Column 3: focus panel */}

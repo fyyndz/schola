@@ -67,7 +67,7 @@ export default function RegisterPage() {
           <input
             className={styles.input}
             name="name"
-            placeholder="Nama lengkap (cth. Leviona)"
+            placeholder="Nama lengkap (cth. Schola)"
             autoComplete="name"
             required
             value={form.name}

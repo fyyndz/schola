@@ -32,9 +32,6 @@ export default function AuthShell({
           <Link href="/" className={styles.formBrand} aria-label="Schola beranda">
             <Image src="/images/schola-brand.png" alt="Schola" width={211} height={73} priority />
           </Link>
-          <div className={styles.mobileIllustration} aria-hidden="true">
-            <Image src="/images/study-planner.png" alt="" width={610} height={1024} priority />
-          </div>
           <header className={styles.header}>
             <h1>{title}</h1>
             <p>{subtitle}</p>
