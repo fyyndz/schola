@@ -150,15 +150,12 @@ export default function FocusPanel() {
 
   return (
     <aside
-      className="flex min-h-[560px] w-full shrink-0 flex-col justify-between overflow-hidden p-6 text-white relative select-none sm:p-7 xl:min-h-0 xl:w-[348px] xl:overflow-y-auto"
+      className="relative flex min-h-[560px] w-full shrink-0 flex-col justify-between overflow-hidden px-6 pb-8 pt-6 text-white select-none sm:px-7 sm:pb-9 sm:pt-7 xl:min-h-0 xl:w-[348px] xl:overflow-y-auto"
       style={{
         backgroundImage: `linear-gradient(rgba(5, 41, 72, 0.42), rgba(5, 41, 72, 0.42)), ${activeColorGradient}`,
       }}
     >
       {/* Decorative shapes */}
-      <div className="absolute -top-3 left-5 right-4 overflow-hidden whitespace-nowrap text-ellipsis text-right text-white/[0.06] text-[40px] font-extrabold leading-none pointer-events-none tracking-tighter">
-        {activeCard?.subject ?? 'Fokus'}
-      </div>
       <div className="absolute -bottom-14 -left-14 w-52 h-52 rounded-full bg-[#4D687D]/20 pointer-events-none" />
       <div className="absolute top-1/2 -right-10 w-36 h-36 rounded-full bg-white/10 pointer-events-none" />
 
