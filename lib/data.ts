@@ -17,6 +17,7 @@ export const initialProfile: StudentProfile = {
   notifDeadline: true,
   notifSchedule: true,
   notifRoutine: false,
+  soundEffectsEnabled: true,
 };
 
 export const initialStudyCards: StudyCard[] = [

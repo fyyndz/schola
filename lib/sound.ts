@@ -43,16 +43,19 @@ function scheduleTone(
   oscillator.stop(context.currentTime + start + duration);
 }
 
-export function playClickSound() {
+export function playClickSound(enabled = true) {
+  if (!enabled) return;
   tone(520, 0, 0.06, 0.035);
 }
 
-export function playSuccessSound() {
+export function playSuccessSound(enabled = true) {
+  if (!enabled) return;
   tone(660, 0, 0.09, 0.055);
   tone(880, 0.09, 0.12, 0.055);
 }
 
-export function playAlarmSound() {
+export function playAlarmSound(enabled = true) {
+  if (!enabled) return;
   [0, 0.28, 0.56, 0.84, 1.12].forEach((start) => {
     tone(880, start, 0.16, 0.12);
   });

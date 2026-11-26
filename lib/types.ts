@@ -5,6 +5,7 @@ export type Priority = 'Tinggi' | 'Sedang';
 export type DayName = 'Senin' | 'Selasa' | 'Rabu' | 'Kamis' | 'Jumat' | 'Sabtu';
 export type DeadlinePreset = 'hours_3' | 'tomorrow' | 'days_2' | 'days_4' | 'overdue_test' | 'custom';
 export type NotifKey = 'notifDeadline' | 'notifSchedule' | 'notifRoutine';
+export type ProfileSwitchKey = NotifKey | 'soundEffectsEnabled';
 export type ReminderLeadUnit = 'minutes' | 'hours' | 'days';
 export type ReminderRepeat = 'once' | 'daily' | 'weekdays' | 'custom';
 export type ReminderDay = 'Senin' | 'Selasa' | 'Rabu' | 'Kamis' | 'Jumat' | 'Sabtu' | 'Minggu';
@@ -97,4 +98,5 @@ export interface StudentProfile {
   notifDeadline: boolean;
   notifSchedule: boolean;
   notifRoutine: boolean;
+  soundEffectsEnabled: boolean;
 }

@@ -131,7 +131,8 @@ function isStudentProfile(value: unknown): value is StudentProfile {
     (value.avatarDataUrl === undefined || isString(value.avatarDataUrl)) &&
     typeof value.notifDeadline === 'boolean' &&
     typeof value.notifSchedule === 'boolean' &&
-    typeof value.notifRoutine === 'boolean'
+    typeof value.notifRoutine === 'boolean' &&
+    (value.soundEffectsEnabled === undefined || typeof value.soundEffectsEnabled === 'boolean')
   );
 }
 
@@ -250,7 +251,7 @@ export function readPlannerSnapshot(email: string): PlannerSnapshot | null {
   }
 
   return {
-    profile: value.profile,
+    profile: { ...value.profile, soundEffectsEnabled: value.profile.soundEffectsEnabled ?? true },
     studyCards: value.studyCards,
     focusHours: value.focusHours,
     focusTopicIndex: value.focusTopicIndex,

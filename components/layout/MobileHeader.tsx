@@ -15,7 +15,7 @@ export default function MobileHeader() {
   } = usePlanner();
   return (
     <div
-      className="sticky top-0 z-30 flex w-full shrink-0 items-center gap-2 border-b border-[#B3B9BF]/45 bg-white px-3 py-3 shadow-[0_2px_5px_-3px_rgba(5,41,72,0.2)] xl:hidden"
+      className="sticky top-0 z-30 flex w-full shrink-0 items-center gap-2 border-b border-[#B3B9BF]/45 bg-white px-3 py-3 shadow-[0_2px_4px_rgba(5,41,72,0.08)] xl:hidden"
     >
       <div className="flex items-center">
         <button

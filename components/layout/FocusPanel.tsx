@@ -33,6 +33,7 @@ export default function FocusPanel() {
   const {
     firstName,
     isDummyAccount,
+    profile,
     focusHours,
     focusGoalHours,
     focusTopicIndex,
@@ -99,7 +100,7 @@ export default function FocusPanel() {
   useEffect(() => {
     if (phase === 'focus' && seconds === 0) {
       setPhase('done');
-      playAlarmSound();
+      playAlarmSound(profile.soundEffectsEnabled);
       showStudyNotification(
         'Waktu belajar selesai',
         activeCard
@@ -108,33 +109,33 @@ export default function FocusPanel() {
       );
       if (activeCard) {
         logStudySession(activeCard.id, timerDurationSeconds / 3600);
-        playSuccessSound();
+        playSuccessSound(profile.soundEffectsEnabled);
       } else {
         addFocusHours(timerDurationSeconds / 3600);
         showToast(`Sesi timer selesai! ${formatHours(timerDurationSeconds / 3600)} jam belajar dicatat.`);
-        playSuccessSound();
+        playSuccessSound(profile.soundEffectsEnabled);
       }
     }
-  }, [phase, seconds, activeCard, timerDurationSeconds, logStudySession, addFocusHours, showToast]);
+  }, [phase, seconds, activeCard, timerDurationSeconds, logStudySession, addFocusHours, profile.soundEffectsEnabled, showToast]);
 
   const toggle = () => {
     if (phase === 'focus') {
       setPhase('paused');
-      playClickSound();
+      playClickSound(profile.soundEffectsEnabled);
     } else {
       if (timerDurationSeconds <= 0) {
         showToast('Atur durasi timer lebih dari 0 sebelum memulai.');
         return;
       }
       void requestStudyNotificationPermission();
-      playClickSound();
+      playClickSound(profile.soundEffectsEnabled);
       if (seconds === 0) setSeconds(timerDurationSeconds);
       setPhase('focus');
     }
   };
 
   const reset = () => {
-    playClickSound();
+    playClickSound(profile.soundEffectsEnabled);
     setPhase('idle');
     setSeconds(timerDurationSeconds);
   };

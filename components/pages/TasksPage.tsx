@@ -135,7 +135,7 @@ export default function TasksPage() {
                 key={task.id}
                 className={`rounded-[22px] p-4 border shadow-2xs transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
                   task.completed
-                    ? 'bg-white opacity-70 border-[#B3B9BF]/40'
+                    ? 'bg-white border-[#B3B9BF]/40'
                     : overdue
                       ? 'bg-red-50/90 border-red-300 ring-1 ring-red-200 hover:border-red-500'
                       : 'bg-white border-[#B3B9BF]/45 hover:border-[#052948]'
@@ -210,7 +210,11 @@ export default function TasksPage() {
                       deleteTask(task.id);
                     }}
                     aria-label="Hapus tugas"
-                    className="p-2 rounded-xl text-[#4D687D] hover:text-red-600 hover:bg-red-50 transition-colors"
+                    className={`p-2 rounded-xl transition-colors ${
+                      task.completed
+                        ? 'bg-red-50 text-red-700 hover:bg-red-100'
+                        : 'text-[#4D687D] hover:text-red-600 hover:bg-red-50'
+                    }`}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>

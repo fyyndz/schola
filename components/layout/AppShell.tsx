@@ -36,7 +36,7 @@ function CurrentPage() {
 
 function AppFooter({ className }: { className: string }) {
   return (
-    <footer className={`shrink-0 items-center justify-center gap-1.5 border-t border-[#B3B9BF]/30 bg-white py-2 text-xs text-[#4D687D] ${className}`}>
+    <footer className={`h-8 shrink-0 items-center justify-center gap-1.5 border-t border-[#B3B9BF]/30 bg-white text-xs leading-none text-[#4D687D] ${className}`}>
       <span>made by</span>
       <Heart aria-hidden="true" className="h-3.5 w-3.5 fill-[#791A0A] text-[#791A0A]" />
       <span>kelompok 1</span>
@@ -50,8 +50,8 @@ export default function AppShell() {
 
   return (
     <>
-      <div className="flex min-h-screen w-full flex-col xl:h-screen xl:overflow-hidden">
-        <div className="min-h-screen w-full flex-1 flex flex-col xl:min-h-0 xl:overflow-hidden xl:flex-row">
+      <div className="flex w-full flex-col xl:h-screen xl:overflow-hidden">
+        <div className="w-full flex flex-col xl:flex-1 xl:min-h-0 xl:overflow-hidden xl:flex-row">
           <MobileHeader />
 
           {/* Mobile sidebar backdrop */}
@@ -66,9 +66,14 @@ export default function AppShell() {
           <div className="relative flex min-w-0 flex-1 flex-col bg-[#F7FAFC] xl:overflow-hidden">
             <Header />
             <main id="main-scroll-area" className="flex-1 xl:min-h-0 xl:overflow-y-auto">
-              <div className={`relative flex w-full flex-col bg-white pt-1 ${isProfilePage ? '' : 'min-h-[calc(100dvh-4rem)]'}`}>
+              <div className="relative flex min-h-[calc(100dvh-4rem)] w-full flex-col bg-white pt-1">
                 <FloatingAddButton />
-                <div key={page} className="flex-1 pb-3 pt-5 schola-grid-container playful-enter sm:pt-6">
+                <div
+                  key={page}
+                  className={`flex-1 pt-5 schola-grid-container playful-enter sm:pt-6 ${
+                    isProfilePage ? 'pb-0' : 'pb-3'
+                  }`}
+                >
                   <CurrentPage />
                 </div>
               </div>

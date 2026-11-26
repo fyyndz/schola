@@ -10,7 +10,7 @@ export default function Header() {
 
   return (
     <header
-      className="hidden h-16 w-full shrink-0 items-center justify-between gap-[20px] border-b border-[#B3B9BF]/45 bg-white px-[14px] shadow-[0_2px_5px_-3px_rgba(5,41,72,0.2)] xl:flex"
+      className="relative z-10 hidden h-16 w-full shrink-0 items-center justify-between gap-[20px] border-b border-[#B3B9BF]/45 bg-white px-[14px] shadow-[0_2px_4px_rgba(5,41,72,0.08)] xl:flex"
     >
       <div className="relative flex-1 min-w-0">
         <GlobalSearch />

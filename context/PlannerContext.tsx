@@ -39,8 +39,8 @@ import type {
   DayName,
   ModalId,
   NewTaskInput,
-  NotifKey,
   PageKey,
+  ProfileSwitchKey,
   Reminder,
   ReminderInput,
   RetentionUnit,
@@ -91,7 +91,7 @@ interface PlannerContextValue {
   updateProfile: (
     data: Pick<StudentProfile, 'name' | 'studentClass' | 'school' | 'email' | 'avatarDataUrl'>,
   ) => void;
-  toggleProfileSwitch: (key: NotifKey) => void;
+  toggleProfileSwitch: (key: ProfileSwitchKey) => void;
   confirmLogout: () => void;
 
   // focus & study cards
@@ -308,28 +308,28 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
   // ---------- navigation ----------
   const setPage = useCallback(
     (p: PageKey) => {
-      playClickSound();
+    playClickSound(profile.soundEffectsEnabled);
       const t = Date.now();
       setNow(t);
       setTasks((prev) => pruneTasks(prev, false, retention.value, retention.unit, t));
       setPageState(p);
       setMobileNavOpen(false);
     },
-    [retention],
+    [profile.soundEffectsEnabled, retention],
   );
 
   const toggleMobileNav = useCallback(() => {
-    playClickSound();
+    playClickSound(profile.soundEffectsEnabled);
     setMobileNavOpen((open) => !open);
-  }, []);
+  }, [profile.soundEffectsEnabled]);
 
   // ---------- modals ----------
   const openModal = useCallback((id: ModalId) => {
-    playClickSound();
+    playClickSound(profile.soundEffectsEnabled);
     setModal({ id, scheduleDay: 'Senin', agendaDay: TODAY_ISO_DATE, reminderToEdit: null, studyCardToEdit: null });
-  }, []);
+  }, [profile.soundEffectsEnabled]);
   const openReminderEditor = useCallback((reminder: Reminder) => {
-    playClickSound();
+    playClickSound(profile.soundEffectsEnabled);
     setModal({
       id: 'addReminderModal',
       scheduleDay: 'Senin',
@@ -337,9 +337,9 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
       reminderToEdit: reminder,
       studyCardToEdit: null,
     });
-  }, []);
+  }, [profile.soundEffectsEnabled]);
   const openStudyCardEditor = useCallback((card: StudyCard) => {
-    playClickSound();
+    playClickSound(profile.soundEffectsEnabled);
     setModal({
       id: 'addStudyCardModal',
       scheduleDay: 'Senin',
@@ -347,7 +347,7 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
       reminderToEdit: null,
       studyCardToEdit: card,
     });
-  }, []);
+  }, [profile.soundEffectsEnabled]);
   const openScheduleForDay = useCallback((day: DayName) => {
     setModal({
       id: 'addScheduleModal',
@@ -408,9 +408,9 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
   );
 
   const toggleProfileSwitch = useCallback(
-    (key: NotifKey) => {
+    (key: ProfileSwitchKey) => {
       setProfile((p) => ({ ...p, [key]: !p[key] }));
-      showToast('Pengaturan notifikasi diperbarui.');
+      showToast(key === 'soundEffectsEnabled' ? 'Pengaturan efek suara diperbarui.' : 'Pengaturan notifikasi diperbarui.');
     },
     [showToast],
   );
@@ -455,10 +455,10 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
         prev.map((c) => (c.id === id ? { ...c, doneHours: Math.min(c.goalHours, +(c.doneHours + 1).toFixed(2)) } : c)),
       );
       addFocusHours(1);
-      playSuccessSound();
+      playSuccessSound(profile.soundEffectsEnabled);
       showToast(`+1 Jam ditambahkan ke ${card.title}!`);
     },
-    [studyCards, addFocusHours, showToast],
+    [studyCards, addFocusHours, profile.soundEffectsEnabled, showToast],
   );
 
   const removeStudyCard = useCallback(
@@ -576,11 +576,11 @@ export function PlannerProvider({ children }: { children: ReactNode }) {
       setTasks((prev) =>
         prev.map((t) => (t.id === id ? { ...t, completed, completedAt: completed ? Date.now() : null } : t)),
       );
-      if (completed) playSuccessSound();
-      else playClickSound();
+      if (completed) playSuccessSound(profile.soundEffectsEnabled);
+      else playClickSound(profile.soundEffectsEnabled);
       showToast(completed ? 'Tugas selesai! Masuk riwayat sementara.' : 'Tugas dibuka kembali.');
     },
-    [tasks, showToast],
+    [tasks, profile.soundEffectsEnabled, showToast],
   );
 
   const extendTask = useCallback(

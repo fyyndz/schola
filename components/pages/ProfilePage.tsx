@@ -3,12 +3,13 @@
 import Image from 'next/image';
 import { ChevronDown, Contact, Pencil, SlidersHorizontal } from 'lucide-react';
 import { usePlanner } from '@/context/PlannerContext';
-import type { NotifKey, RetentionUnit } from '@/lib/types';
+import type { ProfileSwitchKey, RetentionUnit } from '@/lib/types';
 
-const SWITCHES: { key: NotifKey; title: string; desc: string }[] = [
+const SWITCHES: { key: ProfileSwitchKey; title: string; desc: string }[] = [
   { key: 'notifDeadline', title: 'Notifikasi Deadline Tugas', desc: 'Ingatkan H-1 dan saat lewat batas waktu' },
-  { key: 'notifSchedule', title: 'Pengingat Jadwal Pagi', desc: 'Kirim daftar pelajaran pukul 06:15 WIB' },
+  { key: 'notifSchedule', title: 'Pengingat Jadwal Pagi', desc: 'Ingatkan jadwal pelajaran setiap pagi' },
   { key: 'notifRoutine', title: 'Pengingat Belajar Rutin', desc: 'Notifikasi fokus belajar setiap malam' },
+  { key: 'soundEffectsEnabled', title: 'Efek Suara', desc: 'Suara interaksi dan saat timer selesai' },
 ];
 
 export default function ProfilePage() {

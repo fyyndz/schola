@@ -65,6 +65,17 @@ describe('planner data persistence', () => {
     expect(readPlannerSnapshot('student@example.com')).toEqual(snapshot);
   });
 
+  it('defaults sound effects to enabled for snapshots saved before the setting existed', () => {
+    const oldSnapshot = JSON.parse(JSON.stringify(snapshot)) as PlannerSnapshot;
+    delete (oldSnapshot.profile as Partial<PlannerSnapshot['profile']>).soundEffectsEnabled;
+    storageValues.set(
+      'schola.planner-data.v1:student%40example.com',
+      JSON.stringify({ version: 1, ...oldSnapshot }),
+    );
+
+    expect(readPlannerSnapshot('student@example.com')?.profile.soundEffectsEnabled).toBe(true);
+  });
+
   it('keeps saved planner data isolated by account', () => {
     writePlannerSnapshot('first@example.com', snapshot);
 
