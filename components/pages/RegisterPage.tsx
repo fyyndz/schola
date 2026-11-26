@@ -7,7 +7,7 @@ import AuthShell from "../_components/AuthShell";
 import PasswordInput from "../_components/PasswordInput";
 import GoogleButton from "../_components/GoogleButton";
 import styles from "../_components/auth.module.css";
-import { getCurrentDemoUser, registerDemoAccount } from "@/lib/demo-auth";
+import { getCurrentDemoUser, logoutDemoAccount, registerDemoAccount } from "@/lib/demo-auth";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -47,7 +47,8 @@ export default function RegisterPage() {
         studentClass: form.kelas,
         school: form.sekolah,
       });
-      router.replace("/");
+      logoutDemoAccount();
+      router.replace("/login");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Gagal mendaftar. Coba lagi.");
     } finally {

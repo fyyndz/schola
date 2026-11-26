@@ -20,10 +20,12 @@ export default function FloatingAddButton() {
     <button
       type="button"
       onClick={openQuickAction}
-      title={ACTION_LABELS[page]}
       aria-label={ACTION_LABELS[page]}
-      className="sticky top-[calc(100dvh-5rem)] z-40 mb-[-3.5rem] ml-auto mr-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#791A0A] text-white shadow-lg shadow-[#791A0A]/30 transition-transform active:scale-95 xl:hidden"
+      className="group sticky top-[calc(100dvh-11rem)] z-40 mb-4 ml-auto mr-4 flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#791A0A] text-white shadow-lg shadow-[#791A0A]/30 transition-transform active:scale-95"
     >
+      <span className="pointer-events-none absolute right-full top-1/2 z-50 mr-3 -translate-y-1/2 whitespace-nowrap rounded-xl bg-[#052948] px-3 py-1.5 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+        {ACTION_LABELS[page]}
+      </span>
       <Plus className="h-7 w-7 stroke-[2.5]" />
     </button>
   );

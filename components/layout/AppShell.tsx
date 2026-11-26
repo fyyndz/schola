@@ -36,7 +36,7 @@ function CurrentPage() {
 
 function AppFooter({ className }: { className: string }) {
   return (
-    <footer className={`h-8 shrink-0 items-center justify-center gap-1.5 border-t border-[#B3B9BF]/30 bg-white text-xs leading-none text-[#4D687D] ${className}`}>
+    <footer className={`h-8 shrink-0 items-center justify-center gap-1.5 border-t border-[#B3B9BF]/30 bg-white py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] text-xs leading-none text-[#4D687D] xl:h-8 xl:py-0 ${className}`}>
       <span>made by</span>
       <Heart aria-hidden="true" className="h-3.5 w-3.5 fill-[#791A0A] text-[#791A0A]" />
       <span>kelompok 1</span>
@@ -70,7 +70,7 @@ export default function AppShell() {
                 <FloatingAddButton />
                 <div
                   key={page}
-                  className={`flex-1 pt-5 schola-grid-container playful-enter sm:pt-6 ${
+                  className={`-mt-14 flex-1 pt-5 schola-grid-container playful-enter sm:pt-6 ${
                     isProfilePage ? 'pb-0' : 'pb-3'
                   }`}
                 >
