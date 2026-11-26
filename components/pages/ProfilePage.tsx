@@ -31,7 +31,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <div className="mb-5">
+      <div className="mb-5 xl:mb-3">
         <h1 className="text-2xl font-extrabold text-[#052948] tracking-tight">Profile</h1>
         <p className="text-xs font-semibold text-[#4D687D] mt-0.5">
           Kelola identitas siswa, data kelas, dan preferensi notifikasi
@@ -39,9 +39,9 @@ export default function ProfilePage() {
       </div>
 
       {/* Header card */}
-      <div className="bg-white rounded-[26px] p-5 border border-[#B3B9BF]/45 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4 mb-5">
+      <div className="bg-white rounded-[26px] p-5 xl:p-3.5 border border-[#B3B9BF]/45 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4 xl:gap-3 mb-5 xl:mb-3">
         <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-          <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-[#052948] to-[#4D687D] text-xl font-extrabold text-white shadow-md">
+          <div className="relative flex h-16 w-16 xl:h-12 xl:w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-[#052948] to-[#4D687D] text-xl xl:text-lg font-extrabold text-white shadow-md">
             {profile.avatarDataUrl ? (
               <Image
                 src={profile.avatarDataUrl}
@@ -71,16 +71,16 @@ export default function ProfilePage() {
         </button>
       </div>
 
-      <div className="schola-12-grid">
+      <div className="schola-12-grid xl:gap-3">
         {/* Account info */}
-        <div className="col-span-12 xl:col-span-6 bg-white rounded-[24px] p-5 border border-[#B3B9BF]/45 shadow-2xs">
-          <h3 className="text-sm font-extrabold text-[#052948] pb-3 border-b border-[#B3B9BF]/30 flex items-center gap-2">
+        <div className="col-span-12 xl:col-span-6 bg-white rounded-[24px] p-5 xl:p-3.5 border border-[#B3B9BF]/45 shadow-2xs">
+          <h3 className="text-sm font-extrabold text-[#052948] pb-3 xl:pb-2 border-b border-[#B3B9BF]/30 flex items-center gap-2">
             <Contact className="w-4 h-4 text-[#052948]" />
             <span>Informasi Akun</span>
           </h3>
           <div className="divide-y divide-[#B3B9BF]/25 text-xs mt-1">
             {info.map(([label, value]) => (
-              <div key={label} className="py-3 flex justify-between gap-3">
+              <div key={label} className="py-3 xl:py-2 flex justify-between gap-3">
                 <span className="text-[#4D687D] font-semibold">{label}</span>
                 <span className="font-extrabold text-[#052948] text-right">{value}</span>
               </div>
@@ -89,12 +89,12 @@ export default function ProfilePage() {
         </div>
 
         {/* Settings */}
-        <div className="col-span-12 xl:col-span-6 bg-white rounded-[24px] p-5 border border-[#B3B9BF]/45 shadow-2xs">
-          <h3 className="text-sm font-extrabold text-[#052948] pb-3 border-b border-[#B3B9BF]/30 flex items-center gap-2">
+        <div className="col-span-12 xl:col-span-6 bg-white rounded-[24px] p-5 xl:p-3.5 border border-[#B3B9BF]/45 shadow-2xs">
+          <h3 className="text-sm font-extrabold text-[#052948] pb-3 xl:pb-2 border-b border-[#B3B9BF]/30 flex items-center gap-2">
             <SlidersHorizontal className="w-4 h-4 text-[#052948]" />
             <span>Pengaturan</span>
           </h3>
-          <div className="space-y-4 mt-3.5 text-xs">
+          <div className="space-y-4 xl:space-y-2.5 mt-3.5 xl:mt-2.5 text-xs">
             {SWITCHES.map((s) => (
               <div key={s.key} className="flex items-center justify-between">
                 <div>
@@ -113,7 +113,7 @@ export default function ProfilePage() {
               </div>
             ))}
 
-            <div className="pt-3 border-t border-[#B3B9BF]/30">
+            <div className="pt-3 xl:pt-2 border-t border-[#B3B9BF]/30">
               <p className="font-extrabold text-[#052948] mb-1.5">Pembersihan Otomatis Riwayat Tugas Selesai</p>
               <div className="flex items-center gap-2.5">
                 <input
@@ -122,13 +122,13 @@ export default function ProfilePage() {
                   max={365}
                   value={retention.value}
                   onChange={(e) => updateRetention(parseInt(e.target.value, 10) || 1, null)}
-                  className="w-16 px-3 py-2 rounded-xl border border-[#B3B9BF] text-center font-extrabold text-[#052948]"
+                  className="w-16 px-3 py-2 xl:py-1.5 rounded-xl border border-[#B3B9BF] text-center font-extrabold text-[#052948]"
                 />
                 <div className="relative flex-1">
                   <select
                     value={retention.unit}
                     onChange={(e) => updateRetention(null, e.target.value as RetentionUnit)}
-                    className="appearance-none w-full pl-3.5 pr-9 py-2 rounded-xl border border-[#B3B9BF] bg-white font-bold text-[#052948] focus:border-[#052948] focus:outline-none cursor-pointer"
+                    className="appearance-none w-full pl-3.5 pr-9 py-2 xl:py-1.5 rounded-xl border border-[#B3B9BF] bg-white font-bold text-[#052948] focus:border-[#052948] focus:outline-none cursor-pointer"
                   >
                     <option value="hours">Jam setelah selesai</option>
                     <option value="days">Hari setelah selesai</option>

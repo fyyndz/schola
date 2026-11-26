@@ -16,6 +16,8 @@ const ACTION_LABELS: Record<PageKey, string> = {
 export default function FloatingAddButton() {
   const { page, openQuickAction } = usePlanner();
 
+  if (page === 'profile') return null;
+
   return (
     <button
       type="button"

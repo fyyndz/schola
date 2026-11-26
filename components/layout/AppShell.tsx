@@ -47,6 +47,8 @@ function AppFooter({ className }: { className: string }) {
 export default function AppShell() {
   const { mobileNavOpen, toggleMobileNav, page } = usePlanner();
   const isProfilePage = page === 'profile';
+  const isCalendarPage = page === 'calendar';
+  const anchorsDesktopFooter = isProfilePage || isCalendarPage;
 
   return (
     <>
@@ -65,13 +67,24 @@ export default function AppShell() {
           {/* Column 2: main canvas */}
           <div className="relative flex min-w-0 flex-1 flex-col bg-[#F7FAFC] xl:overflow-hidden">
             <Header />
-            <main id="main-scroll-area" className="flex-1 xl:min-h-0 xl:overflow-y-auto">
-              <div className="relative flex min-h-[calc(100dvh-4rem)] w-full flex-col bg-white pt-1">
+            <main
+              id="main-scroll-area"
+              className={`flex-1 xl:min-h-0 xl:overflow-y-auto ${
+                anchorsDesktopFooter ? 'xl:flex xl:flex-col' : ''
+              }`}
+            >
+              <div
+                className={`relative flex w-full flex-col bg-white pt-1 ${
+                  anchorsDesktopFooter
+                    ? 'min-h-[calc(100dvh-4rem)] xl:min-h-0 xl:flex-1'
+                    : 'min-h-[calc(100dvh-4rem)]'
+                }`}
+              >
                 <FloatingAddButton />
                 <div
                   key={page}
-                  className={`-mt-14 flex-1 pt-5 schola-grid-container playful-enter sm:pt-6 ${
-                    isProfilePage ? 'pb-0' : 'pb-3'
+                  className={`${isProfilePage ? '' : '-mt-14'} flex-1 pt-5 schola-grid-container playful-enter sm:pt-6 ${
+                    isProfilePage ? 'pb-4 xl:pb-2' : 'pb-3'
                   }`}
                 >
                   <CurrentPage />
