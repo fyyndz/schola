@@ -83,7 +83,7 @@ export default function AppShell() {
                 <FloatingAddButton />
                 <div
                   key={page}
-                  className={`${isProfilePage ? '' : '-mt-14'} flex-1 pt-5 schola-grid-container playful-enter sm:pt-6 ${
+                  className={`${isProfilePage ? '' : '-mt-[4.5rem]'} flex-1 pt-4 schola-grid-container playful-enter sm:pt-5 ${
                     isProfilePage ? 'pb-4 xl:pb-2' : 'pb-3'
                   }`}
                 >
