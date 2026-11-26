@@ -124,7 +124,7 @@ export default function DashboardPage() {
                       quickAddStudyHours(item.id);
                     }}
                     title="Tambah +1 Jam Belajar"
-                    className="min-h-10 rounded-full bg-white/20 px-3 py-2 text-[11px] font-extrabold text-white backdrop-blur-xs transition-colors hover:bg-white/35 sm:min-h-0 sm:px-2 sm:py-1 sm:text-[10px]"
+                    className="flex h-11 items-center rounded-full bg-white/20 px-4 text-xs font-extrabold text-white backdrop-blur-xs transition-colors hover:bg-white/35 sm:h-6 sm:px-2 sm:text-[10px]"
                   >
                     +1 Jam
                   </button>
@@ -135,9 +135,9 @@ export default function DashboardPage() {
                     }}
                     aria-label={`Edit kartu ${item.title}`}
                     title="Edit Kartu"
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white transition-all hover:bg-white/35 sm:h-6 sm:w-6"
+                    className="flex h-11 w-11 items-center justify-center rounded-full bg-white/20 text-white transition-all hover:bg-white/35 sm:h-6 sm:w-6"
                   >
-                    <Pencil className="h-4 w-4 sm:h-3 sm:w-3" />
+                    <Pencil className="h-5 w-5 sm:h-3 sm:w-3" />
                   </button>
                   {studyCards.length > 1 && (
                     <button
@@ -147,9 +147,9 @@ export default function DashboardPage() {
                       }}
                       title="Hapus Kartu"
                       aria-label={`Hapus kartu ${item.title}`}
-                      className="flex h-10 w-10 items-center justify-center rounded-full bg-black/15 text-white/85 transition-all hover:bg-rose-500 hover:text-white sm:h-6 sm:w-6"
+                      className="flex h-11 w-11 items-center justify-center rounded-full bg-black/15 text-white/85 transition-all hover:bg-rose-500 hover:text-white sm:h-6 sm:w-6"
                     >
-                      <X className="h-4 w-4 sm:h-3 sm:w-3" />
+                      <X className="h-5 w-5 sm:h-3 sm:w-3" />
                     </button>
                   )}
                 </div>

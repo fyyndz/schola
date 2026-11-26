@@ -14,12 +14,14 @@ export default function MobileHeader() {
     profile,
   } = usePlanner();
   return (
-    <div className="z-30 flex shrink-0 items-center gap-2 bg-white px-3 py-3 border-b border-[#B3B9BF]/40 xl:hidden">
+    <div
+      className="sticky top-0 z-30 flex w-full shrink-0 items-center gap-2 border-b border-[#B3B9BF]/45 bg-white px-3 py-3 shadow-[0_2px_5px_-3px_rgba(5,41,72,0.2)] xl:hidden"
+    >
       <div className="flex items-center">
         <button
           onClick={toggleMobileNav}
           aria-label="Buka menu"
-          className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#052948]/10 text-[#052948] hover:bg-[#052948]/20 transition-colors"
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#052948] text-white transition-colors hover:bg-[#4D687D]"
         >
           <Menu className="w-5 h-5" />
         </button>

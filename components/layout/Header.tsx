@@ -9,7 +9,9 @@ export default function Header() {
   const { setPage, activeRemindersCount, firstName, profile } = usePlanner();
 
   return (
-    <header className="hidden h-16 shrink-0 items-center justify-between gap-[20px] schola-grid-container xl:flex">
+    <header
+      className="hidden h-16 w-full shrink-0 items-center justify-between gap-[20px] border-b border-[#B3B9BF]/45 bg-white px-[14px] shadow-[0_2px_5px_-3px_rgba(5,41,72,0.2)] xl:flex"
+    >
       <div className="relative flex-1 min-w-0">
         <GlobalSearch />
       </div>
